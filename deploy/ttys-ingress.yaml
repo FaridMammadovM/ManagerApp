@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ttys-ingress
+  namespace: ttys
+  labels:
+    app: ttys
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  defaultBackend:
+    service:
+      name: ttys-svc
+      port:
+        number: 80
+  rules:
+  - host: ttys-staging.k8s.tebib.local
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: ttys-svc
+            port:
+              number: 80

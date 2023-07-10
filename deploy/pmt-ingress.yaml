@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pmt-ingress
+  namespace: ttys
+  labels:
+    app: pmt
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+spec:
+  defaultBackend:
+    service:
+      name: pmt-svc
+      port:
+        number: 80
+  rules:
+  - host: pmt-staging.k8s.tebib.local
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: pmt-svc
+            port:
+              number: 80

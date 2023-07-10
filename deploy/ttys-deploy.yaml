@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ttys-deploy
+  namespace: ttys
+  labels:
+    app: ttys
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ttys
+  template:
+    metadata:
+      labels:
+        app: ttys
+    spec:
+      containers:
+      - name: ttys
+        image: registry.k8s.tebib.local/k8s/ttys:${CI_PIPELINE_IID}
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: "Always"
+      imagePullSecrets:
+           - name: ttys-token

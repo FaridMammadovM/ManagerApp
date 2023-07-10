@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pmt-deploy
+  namespace: pmt
+  labels:
+    app: pmt
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pmt
+  template:
+    metadata:
+      labels:
+        app: pmt
+    spec:
+      containers:
+      - name: pmt
+        image: registry.k8s.tebib.local/k8s/pmt:${CI_PIPELINE_IID}
+        ports:
+        - containerPort: 5000
+        imagePullPolicy: "Always"
+      imagePullSecrets:
+           - name: pmt-token

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pmt-svc
+  namespace: pmt
+  labels:
+    app: pmt
+spec:
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  selector:
+   app: pmt
